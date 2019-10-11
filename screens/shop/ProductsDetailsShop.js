@@ -7,14 +7,16 @@ import {
   ScrollView,
   StyleSheet
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../../constants/Colors';
+import * as cartActions from '../../store/actions/cartAction';
 
 const ProductsDetailsShop = props => {
   const productId = props.navigation.getParam('productId');
   const selProduct = useSelector(state =>
     state.products.availProducts.find(prod => prod.id === productId)
   );
+  const dispatch = useDispatch();
   return (
     <ScrollView>
       <Image style={styles.image} source={{ uri: selProduct.imageUrl }} />
@@ -22,7 +24,9 @@ const ProductsDetailsShop = props => {
         <Button
           color={Colors.btncolor}
           title="Add To Cart"
-          onPress={() => {}}
+          onPress={() => {
+            dispatch(cartActions.addToCart(selProduct));
+          }}
         ></Button>
       </View>
       <Text style={styles.price}>₱ {selProduct.price.toFixed(2)}</Text>
@@ -43,12 +47,14 @@ const styles = StyleSheet.create({
     height: 300
   },
   price: {
+    fontFamily: 'open-sans',
     fontSize: 20,
     color: '#888',
     textAlign: 'center',
     marginVertical: 20
   },
   description: {
+    fontFamily: 'open-sans',
     fontSize: 14,
     textAlign: 'center',
     marginHorizontal: 20

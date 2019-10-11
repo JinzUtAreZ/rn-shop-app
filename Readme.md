@@ -24,3 +24,5 @@ safe install kapag nagkaerror sa expo (expo install "package-name")
 8. npm install --save @expo/vector-icons
 9. npm install --save react-navigation-material-bottom-tabs
 10. npm install --save redux react-redux
+11. npm install --save expo-font
+12. npm install --save-dev redux-devtools-extension
