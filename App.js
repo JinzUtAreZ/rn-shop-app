@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
-
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import productReducer from './store/reducers/productsReducer';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
+
+import productsReducer from './store/reducers/productsReducer';
 import cartReducer from './store/reducers/cartReducer';
 import ShopNavigator from './navigation/ShopNavigator';
 
-import { AppLoading } from 'expo';
-import * as Font from 'expo-font';
-import { composeWithDevTools } from 'redux-devtools-extension';
-/// remove composeWithDevTools in production of app
-
 const rootReducer = combineReducers({
-  products: productReducer,
+  products: productsReducer,
   cart: cartReducer
 });
+
+const store = createStore(rootReducer);
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -23,13 +22,17 @@ const fetchFonts = () => {
   });
 };
 
-const store = createStore(rootReducer, composeWithDevTools());
-
 export default function App() {
-  const [fontLoad, isFontLoad] = useState(false);
-  if (!fontLoad) {
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+  if (!fontLoaded) {
     return (
-      <AppLoading startAsync={fetchFonts} onFinish={() => isFontLoad(true)} />
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => {
+          setFontLoaded(true);
+        }}
+      />
     );
   }
   return (
