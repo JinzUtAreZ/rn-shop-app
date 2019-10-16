@@ -26,3 +26,4 @@ safe install kapag nagkaerror sa expo (expo install "package-name")
 10. npm install --save redux react-redux
 11. npm install --save expo-font
 12. npm install --save-dev redux-devtools-extension
+13. npm install --save moment
