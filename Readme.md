@@ -27,3 +27,6 @@ safe install kapag nagkaerror sa expo (expo install "package-name")
 11. npm install --save expo-font
 12. npm install --save-dev redux-devtools-extension
 13. npm install --save moment
+14. npm install --save redux-thunk
+
+validate.js formix (3rd party libraries worth reading)
