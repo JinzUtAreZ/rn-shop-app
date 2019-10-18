@@ -74,7 +74,7 @@ const AdminNavigator = createStackNavigator(
     navigationOptions: {
       drawerIcon: drawerConfig => (
         <Ionicons
-          name={Platform.OS === 'android' ? 'md-list' : 'md-list'}
+          name={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
           size={23}
           colors={drawerConfig.tintColor}
         />
