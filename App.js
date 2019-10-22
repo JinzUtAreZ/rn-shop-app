@@ -5,15 +5,15 @@ import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import ReduxThunk from 'redux-thunk';
 
-import productsReducer from './store/reducers/productsReducer';
-import cartReducer from './store/reducers/cartReducer';
-import orderReducer from './store/reducers/ordersReducer';
+import productsReducer from './store/reducers/products';
+import cartReducer from './store/reducers/cart';
+import ordersReducer from './store/reducers/orders';
 import ShopNavigator from './navigation/ShopNavigator';
 
 const rootReducer = combineReducers({
   products: productsReducer,
   cart: cartReducer,
-  orders: orderReducer
+  orders: ordersReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

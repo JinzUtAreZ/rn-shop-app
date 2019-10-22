@@ -6,15 +6,14 @@ import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import ProductsOverviewScreen from '../screens/shop/ProductsOverviewScreen';
-import ProductDetailScreen from '../screens/shop/ProductsDetailScreen';
+import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
 import CartScreen from '../screens/shop/CartScreen';
 import OrdersScreen from '../screens/shop/OrdersScreen';
+import UserProductsScreen from '../screens/user/UserProductsScreen';
+import EditProductScreen from '../screens/user/EditProductScreen';
 import Colors from '../constants/Colors';
 
-import UserProductsScreen from '../screens/user/UserProductsScreen';
-import EditProductsScreen from '../screens/user/EditProductScreen';
-
-const defaulNavOptions = {
+const defaultNavOptions = {
   headerStyle: {
     backgroundColor: Platform.OS === 'android' ? Colors.primary : ''
   },
@@ -37,13 +36,13 @@ const ProductsNavigator = createStackNavigator(
     navigationOptions: {
       drawerIcon: drawerConfig => (
         <Ionicons
-          name={Platform.OS === 'android' ? 'md-cart' : 'md-cart'}
+          name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
           size={23}
-          colors={drawerConfig.tintColor}
+          color={drawerConfig.tintColor}
         />
       )
     },
-    defaultNavigationOptions: defaulNavOptions
+    defaultNavigationOptions: defaultNavOptions
   }
 );
 
@@ -55,20 +54,20 @@ const OrdersNavigator = createStackNavigator(
     navigationOptions: {
       drawerIcon: drawerConfig => (
         <Ionicons
-          name={Platform.OS === 'android' ? 'md-list' : 'md-list'}
+          name={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
           size={23}
-          colors={drawerConfig.tintColor}
+          color={drawerConfig.tintColor}
         />
       )
     },
-    defaultNavigationOptions: defaulNavOptions
+    defaultNavigationOptions: defaultNavOptions
   }
 );
 
 const AdminNavigator = createStackNavigator(
   {
     UserProducts: UserProductsScreen,
-    EditProduct: EditProductsScreen
+    EditProduct: EditProductScreen
   },
   {
     navigationOptions: {
@@ -76,11 +75,11 @@ const AdminNavigator = createStackNavigator(
         <Ionicons
           name={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
           size={23}
-          colors={drawerConfig.tintColor}
+          color={drawerConfig.tintColor}
         />
       )
     },
-    defaultNavigationOptions: defaulNavOptions
+    defaultNavigationOptions: defaultNavOptions
   }
 );
 
@@ -91,7 +90,9 @@ const ShopNavigator = createDrawerNavigator(
     Admin: AdminNavigator
   },
   {
-    contentOptions: { activeTintColor: Colors.primary }
+    contentOptions: {
+      activeTintColor: Colors.primary
+    }
   }
 );
 

@@ -9,24 +9,34 @@ Android Ctrl + t === IOS Command + t (React Native Debugger)
 safe install kapag nagkaerror sa expo (expo install "package-name")
 
 1. expo init "Name of app"
-2. go to folder thenb npm start
-3. npm install --save redux react-redux react-navigation exporeact-navigation-header-buttons
-4. expo install react-native-gesture-handler react-native-reanimated
-5. npm install --save react-navigation-stack
-   import { createStackNavigator } from 'react-navigation-stack';
-   npm install --save react-navigation-tabs
-   import { createTabsNavigator } from 'react-navigation-tabs';
-   npm install --save react-navigation-drawer
-   import { createDrawerNavigator } from 'react-navigation-drawer';
-6. npm install --save react-native-screens
-   import { useScreens } from 'react-native-screens'
-7. npm install --save react-navigation-header-buttons
-8. npm install --save @expo/vector-icons
-9. npm install --save react-navigation-material-bottom-tabs
-10. npm install --save redux react-redux
-11. npm install --save expo-font
-12. npm install --save-dev redux-devtools-extension
-13. npm install --save moment
-14. npm install --save redux-thunk
+2. go to folder then npm start
+   default package.json
+3.
+
+{
+"main": "node_modules/expo/AppEntry.js",
+"scripts": {
+"start": "expo start",
+"android": "expo start --android",
+"ios": "expo start --ios",
+"web": "expo start --web",
+"eject": "expo eject"
+},
+"dependencies": {
+"expo": "^35.0.0",
+"react": "16.8.3",
+"react-dom": "16.8.3",
+"react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
+"react-native-web": "^0.11.7"
+},
+"devDependencies": {
+"babel-preset-expo": "^7.1.0"
+},
+"private": true
+}
+
+4. npm install --save redux react-redux redux-thunk
+5. npm install --save react-navigation-drawer react-navigation-header-buttons react-navigation-stack
+6. expo install react-native-screens react-native-gesture-handler react-native-reanimated
 
 validate.js formix (3rd party libraries worth reading)

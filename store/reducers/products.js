@@ -3,8 +3,8 @@ import {
   DELETE_PRODUCT,
   CREATE_PRODUCT,
   UPDATE_PRODUCT,
-  GET_PRODUCTS
-} from '../actions/productsAction';
+  SET_PRODUCTS
+} from '../actions/products';
 import Product from '../../models/product';
 
 const initialState = {
@@ -14,10 +14,10 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_PRODUCTS:
+    case SET_PRODUCTS:
       return {
-        availableProducts: action.payload,
-        userProducts: action.payload.filter(prod => prod.ownerId === 'u1')
+        availableProducts: action.products,
+        userProducts: action.products.filter(prod => prod.ownerId === 'u1')
       };
     case CREATE_PRODUCT:
       const newProduct = new Product(
@@ -37,7 +37,6 @@ export default (state = initialState, action) => {
       const productIndex = state.userProducts.findIndex(
         prod => prod.id === action.pid
       );
-      console.log(productIndex);
       const updatedProduct = new Product(
         action.pid,
         state.userProducts[productIndex].ownerId,
@@ -48,17 +47,15 @@ export default (state = initialState, action) => {
       );
       const updatedUserProducts = [...state.userProducts];
       updatedUserProducts[productIndex] = updatedProduct;
-      //console.log(updatedUserProducts);
-      const availableProductsIndex = state.availableProducts.findIndex(
+      const availableProductIndex = state.availableProducts.findIndex(
         prod => prod.id === action.pid
       );
       const updatedAvailableProducts = [...state.availableProducts];
-      updatedAvailableProducts[availableProductsIndex] = updatedProduct;
-      //console.log(updatedAvailableProducts, productIndex);
+      updatedAvailableProducts[availableProductIndex] = updatedProduct;
       return {
         ...state,
-        availableProducts: updatedUserProducts,
-        userProducts: updatedAvailableProducts
+        availableProducts: updatedAvailableProducts,
+        userProducts: updatedUserProducts
       };
     case DELETE_PRODUCT:
       return {

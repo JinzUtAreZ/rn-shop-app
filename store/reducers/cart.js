@@ -1,7 +1,7 @@
-import { ADD_TO_CART, REMOVE_FROM_CART } from '../actions/cartAction';
-import CartItem from '../../models/cart';
-import { ADD_ORDER } from '../actions/ordersAction';
-import { DELETE_PRODUCT } from '../actions/productsAction';
+import { ADD_TO_CART, REMOVE_FROM_CART } from '../actions/cart';
+import { ADD_ORDER } from '../actions/orders';
+import CartItem from '../../models/cart-item';
+import { DELETE_PRODUCT } from '../actions/products';
 
 const initialState = {
   items: {},
@@ -33,30 +33,27 @@ export default (state = initialState, action) => {
         items: { ...state.items, [addedProduct.id]: updatedOrNewCartItem },
         totalAmount: state.totalAmount + prodPrice
       };
-
     case REMOVE_FROM_CART:
-      const selectedCartItems = state.items[action.pid];
-      const currentQty = state.items[action.pid].quantity;
+      const selectedCartItem = state.items[action.pid];
+      const currentQty = selectedCartItem.quantity;
       let updatedCartItems;
       if (currentQty > 1) {
-        // reduce qty by 1
+        // need to reduce it, not erase it
         const updatedCartItem = new CartItem(
-          selectedCartItems.quantity - 1,
-          selectedCartItems.productPrice,
-          selectedCartItems.productTitle,
-          selectedCartItems.sum - selectedCartItems.productPrice
+          selectedCartItem.quantity - 1,
+          selectedCartItem.productPrice,
+          selectedCartItem.productTitle,
+          selectedCartItem.sum - selectedCartItem.productPrice
         );
         updatedCartItems = { ...state.items, [action.pid]: updatedCartItem };
       } else {
-        // remove item from list
         updatedCartItems = { ...state.items };
         delete updatedCartItems[action.pid];
       }
-
       return {
         ...state,
         items: updatedCartItems,
-        totalAmount: state.totalAmount - selectedCartItems.productPrice
+        totalAmount: state.totalAmount - selectedCartItem.productPrice
       };
     case ADD_ORDER:
       return initialState;
@@ -70,8 +67,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         items: updatedItems,
-        totalAmount: state.items.totalAmount - itemTotal
+        totalAmount: state.totalAmount - itemTotal
       };
   }
+
   return state;
 };

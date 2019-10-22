@@ -10,7 +10,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 
 import Colors from '../../constants/Colors';
-import * as cartActions from '../../store/actions/cartAction';
+import * as cartActions from '../../store/actions/cart';
 
 const ProductDetailScreen = props => {
   const productId = props.navigation.getParam('productId');
@@ -31,7 +31,7 @@ const ProductDetailScreen = props => {
           }}
         />
       </View>
-      <Text style={styles.price}>₱ {selectedProduct.price.toFixed(2)}</Text>
+      <Text style={styles.price}>${selectedProduct.price.toFixed(2)}</Text>
       <Text style={styles.description}>{selectedProduct.description}</Text>
     </ScrollView>
   );
