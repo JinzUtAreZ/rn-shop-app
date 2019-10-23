@@ -36,7 +36,9 @@ safe install kapag nagkaerror sa expo (expo install "package-name")
 }
 
 4. npm install --save redux react-redux redux-thunk
-5. npm install --save react-navigation-drawer react-navigation-header-buttons react-navigation-stack
+5. npm install --save react-navigation react-navigation-drawer react-navigation-header-buttons react-navigation-stack
 6. expo install react-native-screens react-native-gesture-handler react-native-reanimated
+7. npm install --save moment expo-linear-gradient
 
 validate.js formix (3rd party libraries worth reading)
+https://firebase.google.com/docs/reference/rest/auth#section-create-email-password (firebase document authentication)
