@@ -14,6 +14,7 @@ import EditProductScreen from '../screens/user/EditProductScreen';
 import Colors from '../constants/Colors';
 
 import AuthScreen from '../screens/user/AuthScreen';
+import StartUpScreen from '../screens/StartupScreen';
 
 const defaultNavOptions = {
   headerStyle: {
@@ -106,6 +107,7 @@ const AuthNavigator = createStackNavigator(
 );
 
 const MainNavigator = createSwitchNavigator({
+  StartUp: StartUpScreen,
   Auth: AuthNavigator,
   Shop: ShopNavigator
 });

@@ -1,10 +1,15 @@
-export const SIGN_UP = 'SIGN_UP';
-export const SIGN_UP_ERROR = 'SIGN_UP_ERROR';
-export const LOG_IN = 'LOG_IN';
-export const LOG_ERROR = 'LOG_ERROR';
+import { AsyncStorage } from 'react-native';
 
-export const setSignUp = (email, password) => async dispatch => {
-  try {
+// export const SIGNUP = 'SIGNUP';
+// export const LOGIN = 'LOGIN';
+export const AUTHENTICATE = 'AUTHENTICATE';
+
+export const authenticate = (userId, token) => {
+  return { type: AUTHENTICATE, userId: userId, token: token };
+};
+
+export const signup = (email, password) => {
+  return async dispatch => {
     const response = await fetch(
       'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDq74FgyLjjcaBHOXp1DO9Rs1QHZGxoXGQ',
       {
@@ -20,30 +25,28 @@ export const setSignUp = (email, password) => async dispatch => {
       }
     );
 
-    console.log('Submitted');
-
     if (!response.ok) {
       const errorResData = await response.json();
       const errorId = errorResData.error.message;
-      let message = 'Something went wrong!!!';
+      let message = 'Something went wrong!';
       if (errorId === 'EMAIL_EXISTS') {
-        message = 'this email exists already';
+        message = 'This email exists already!';
       }
       throw new Error(message);
     }
 
     const resData = await response.json();
-    console.log('SignUp', resData);
-
-    dispatch({ type: SIGN_UP });
-  } catch (err) {
-    //dispatch({ type: SIGN_UP_ERROR, payload: resData });
-    throw err;
-  }
+    console.log(resData);
+    dispatch(authenticate(resData.localId, resData.idToken));
+    const expirationDate = new Date(
+      new Date().getTime() + parseInt(resData.expiresIn) * 1000
+    );
+    saveDataToStorage(resData.idToken, resData.localId, expirationDate);
+  };
 };
 
-export const setLogin = (email, password) => async dispatch => {
-  try {
+export const login = (email, password) => {
+  return async dispatch => {
     const response = await fetch(
       'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDq74FgyLjjcaBHOXp1DO9Rs1QHZGxoXGQ',
       {
@@ -59,26 +62,35 @@ export const setLogin = (email, password) => async dispatch => {
       }
     );
 
-    console.log('Submitted');
-
     if (!response.ok) {
       const errorResData = await response.json();
       const errorId = errorResData.error.message;
-      let message = 'Something went wrong!!!';
+      let message = 'Something went wrong!';
       if (errorId === 'EMAIL_NOT_FOUND') {
-        message = 'this email could not be found';
+        message = 'This email could not be found!';
       } else if (errorId === 'INVALID_PASSWORD') {
-        message = 'this password is not valid';
+        message = 'This password is not valid!';
       }
       throw new Error(message);
     }
 
     const resData = await response.json();
-    console.log('LogIn', resData);
+    console.log(resData);
+    dispatch(authenticate(resData.localId, resData.idToken));
+    const expirationDate = new Date(
+      new Date().getTime() + parseInt(resData.expiresIn) * 1000
+    );
+    saveDataToStorage(resData.idToken, resData.localId, expirationDate);
+  };
+};
 
-    dispatch({ type: LOG_IN });
-  } catch (err) {
-    //dispatch({ type: SIGN_UP_ERROR, payload: resData });
-    throw err;
-  }
+const saveDataToStorage = (token, userId, expirationDate) => {
+  AsyncStorage.setItem(
+    'userData',
+    JSON.stringify({
+      token: token,
+      userId: userId,
+      expiryDate: expirationDate.toISOString()
+    })
+  );
 };
